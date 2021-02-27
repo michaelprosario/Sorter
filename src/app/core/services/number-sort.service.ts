@@ -10,8 +10,8 @@ export class NumberSortService {
 
   bubbleSort(inputArray: Array<number>) {
     Ensure.thatObjectNotNull(inputArray, "input array is required");
-    
-    if(!inputArray){
+        
+    if(!inputArray || inputArray.length === 0){
       return [];
     }
 
@@ -37,6 +37,14 @@ export class NumberSortService {
   swapItems(inputArray: number[], i: number) {
     Ensure.thatObjectNotNull(inputArray, "input array is required");
     Ensure.thatObjectNotNull(i, "i is required");
+
+    if(inputArray.length < 2){
+      throw new Error("Input array should have at least 2 elements");
+    }
+
+    if(i >= inputArray.length){
+      throw new Error("i should be inside the bounds of the array");
+    }
 
     let tmp = inputArray[i];
     inputArray[i] = inputArray[i + 1];
