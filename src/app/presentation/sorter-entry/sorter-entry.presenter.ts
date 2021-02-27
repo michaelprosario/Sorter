@@ -3,7 +3,9 @@ import { ISorterEntryView } from "./sorter-entry-view";
 
 export class SorterEntryPresenter {
 
-  constructor(private view: ISorterEntryView){}
+  constructor(private view: ISorterEntryView){
+    Ensure.thatObjectNotNull(view, "view is required");
+  }
 
   isNumeric(value: string) {
     Ensure.thatObjectNotNull(value, "value is required");
@@ -19,10 +21,10 @@ export class SorterEntryPresenter {
       let intNumber: number = parseInt(strNumber);
       let outputList = [...numberList];
       outputList.push(intNumber);
-      //this.view.setNumberList(outputList);      
-      console.log("ok path")
+      this.view.setNumberList(outputList);      
+
     }else{
-      console.log("error path")
+      
       this.view.showErrorMessage("Input should be a number");
     }    
   }

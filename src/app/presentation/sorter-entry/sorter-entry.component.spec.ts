@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ISorterEntryView } from './sorter-entry-view';
 import { SorterEntryComponent } from './sorter-entry.component';
 import { SorterEntryPresenter } from './sorter-entry.presenter';
+import { Substitute, Arg } from '@fluffy-spoon/substitute';
 
 describe('SorterEntryComponent', () => {
   let component: SorterEntryComponent;
   let fixture: ComponentFixture<SorterEntryComponent>;  
-  let view: ISorterEntryView;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -28,6 +28,7 @@ describe('SorterEntryComponent', () => {
   describe('NumberSorterPresenter', () => {
 
     it('#isNumeric should return true on 123', () => {
+      const view = Substitute.for<ISorterEntryView>();
       let presenter = new SorterEntryPresenter(view);
 
       // arrange
@@ -41,6 +42,7 @@ describe('SorterEntryComponent', () => {
     });
 
     it('#isNumeric should return false on dog', () => {
+      const view = Substitute.for<ISorterEntryView>();
       let presenter = new SorterEntryPresenter(view);
 
       // arrange
@@ -54,6 +56,7 @@ describe('SorterEntryComponent', () => {
     });
 
     it('#isNumeric should return false on empty string', () => {
+      const view = Substitute.for<ISorterEntryView>();
       let presenter = new SorterEntryPresenter(view);
 
       // arrange
@@ -67,6 +70,7 @@ describe('SorterEntryComponent', () => {
     });
 
     it('#isNumeric should return false on empty string', () => {
+      const view = Substitute.for<ISorterEntryView>();
       let presenter = new SorterEntryPresenter(view);
 
       // arrange
@@ -79,8 +83,8 @@ describe('SorterEntryComponent', () => {
       expect(output).toBeFalsy();
     });
 
-    it('#onAddEntry should work for happy case', () => {
-      
+    it('#onAddEntry should work for happy case', () => {      
+      const view = Substitute.for<ISorterEntryView>();
       let presenter = new SorterEntryPresenter(view);
 
       // arrange      
@@ -90,24 +94,26 @@ describe('SorterEntryComponent', () => {
       presenter.onAddEntry("2", list)
 
       // assert            
+      view.didNotReceive().showErrorMessage(Arg.any());
+      view.received().setNumberList(Arg.any());      
+
+
     });
 
     it('#onAddEntry should work for bad input', () => {
-      //let view: ISorterEntryView = new Mock<ISorterEntryView>();
-
+      const view = Substitute.for<ISorterEntryView>();
       let presenter = new SorterEntryPresenter(view);
 
       // arrange
       let input = "bad data";
       let list: Array<number> = [];
 
-      //when(view.showErrorMessage("Input should be a number")).thenReturn();
-
       // act
       presenter.onAddEntry(input, list)
 
       // assert
-      //verify(view.showErrorMessage("Input should be a number")).once();
+      view.received().showErrorMessage(Arg.any());
+      view.didNotReceive().setNumberList(Arg.any());      
     });
 
 
