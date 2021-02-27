@@ -1,0 +1,12 @@
+<h1>Number Sorter</h1>
+
+<input [(ngModel)]="strNumber" name="txtNumber">
+<button (click)="onAddNumber()">Add Number</button>
+
+<h3>List of numbers</h3>
+<li *ngFor="let number of numberList">
+    {{number}}
+</li>
+
+
+<button (click)="onSortList()">Sort Number List</button>
