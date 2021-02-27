@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NumberSortService } from 'src/app/core/services/number-sort.service';
 
 @Component({
   selector: 'app-sorter-entry',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SorterEntryComponent implements OnInit {
 
-  constructor() { }
+  constructor(private numberSortService: NumberSortService) { }
 
   strNumber: string = "";
   numberList: Array<number> = [];
@@ -26,30 +27,8 @@ export class SorterEntryComponent implements OnInit {
     }
   }
 
-  bubbleSort(inputArray: Array<number>) {
-    if(!inputArray){
-      return [];
-    }
-
-    let len = inputArray.length;
-    let swapped;
-    do {
-        swapped = false;
-        for (let i = 0; i < len; i++) {
-            if (inputArray[i] > inputArray[i + 1]) {
-                let tmp = inputArray[i];
-                inputArray[i] = inputArray[i + 1];
-                inputArray[i + 1] = tmp;
-                swapped = true;
-            }
-        }
-    } while (swapped);
-
-    return inputArray;
-  };  
-
   onSortList(){
-    this.numberList = this.bubbleSort(this.numberList);
+    this.numberList = this.numberSortService.bubbleSort(this.numberList);
   }
 
   ngOnInit(): void {

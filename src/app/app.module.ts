@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SorterEntryComponent } from './sorter-entry/sorter-entry.component';
+import { SorterEntryComponent } from './presentation/sorter-entry/sorter-entry.component';
 
 @NgModule({
   declarations: [
