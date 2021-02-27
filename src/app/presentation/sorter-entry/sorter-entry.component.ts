@@ -1,30 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { NumberSortService } from 'src/app/core/services/number-sort.service';
+import { ISorterEntryView } from './sorter-entry-view';
+import { SorterEntryPresenter } from './sorter-entry.presenter';
 
 @Component({
   selector: 'app-sorter-entry',
   templateUrl: './sorter-entry.component.html',
   styleUrls: ['./sorter-entry.component.css']
 })
-export class SorterEntryComponent implements OnInit {
+export class SorterEntryComponent implements OnInit, ISorterEntryView {
 
-  constructor(private numberSortService: NumberSortService) { }
 
   strNumber: string = "";
   numberList: Array<number> = [];
+  presenter: SorterEntryPresenter;
 
-  isNumeric(value: string) {
-    return /^-?\d+$/.test(value);
-  }  
+  constructor(private numberSortService: NumberSortService) { 
+    this.presenter = new SorterEntryPresenter(this);
+  }
+  
+  setNumberList(outputList: number[]) {
+    this.numberList = outputList;
+    this.strNumber = "";
+  }
+
+  showErrorMessage(errorMessage: string): void {
+    alert(errorMessage);
+  }
 
   onAddNumber(){
-    if(this.isNumeric(this.strNumber)){
-      let intNumber: number = parseInt(this.strNumber);
-      this.numberList.push(intNumber);
-      this.strNumber = "";  
-    }else{
-      alert("Input should be a number");
-    }
+    this.presenter.onAddEntry(this.strNumber, this.numberList);
   }
 
   onSortList(){
